@@ -15,7 +15,8 @@ class JobsController extends Controller
 
     public function jobs(Request $request) {
         $query = $request->query('q');
-        $jt = $request->query('jt');
+        $j = $request->query('j');
+        $page = $request->query('p') ? (int) $request->query('p') : 0;
 
         $searches = session()->get('searches');
         if(!isset($searches)) {
@@ -28,17 +29,23 @@ class JobsController extends Controller
         }
 
         if($query) {
-            $jobs = Job::where('title', 'like', "%$query%")->orWhere('description', 'like', "%$query%")->get();
+            $jobs = Job::where('title', 'like', "%$query%")->orWhere('description', 'like', "%$query%")->offset(8 * $page)->limit(8)->get();
 
             return view('jobs.results', [
                 'jobs' => $jobs,
-                'query' => $query
+                'query' => $query,
+                'j' => $j ? $j : null,
+                'pages_count' => ceil($jobs->count() / 8),
+                'current_page' => $page,
             ]);
         }
         else {
             return view('jobs.results', [
-                'jobs' => [],
-                'query' => $query
+                'jobs' => Job::offset($page * 8)->limit(8)->get(),
+                'query' => $query,
+                'j' => $j ? $j : null,
+                'pages_count' => ceil(Job::count() / 8),
+                'current_page' => $page,
             ]);
         }
     }

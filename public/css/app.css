@@ -1,0 +1,16 @@
+* {
+    outline: none;
+}
+
+a {
+    color: initial;
+    text-decoration: none;
+}
+
+a:hover {
+}
+
+.job:hover {
+    color: blue;
+    cursor: pointer;
+}
