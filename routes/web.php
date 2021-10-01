@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [JobsController::class, 'index']);
+Route::get('/jobs', [JobsController::class, 'jobs']);

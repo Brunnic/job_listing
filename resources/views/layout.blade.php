@@ -14,5 +14,14 @@
     <div class="container">
         @yield('content')
     </div>
+
+    @yield('scripts')
+
+    <script>
+        var searchButton = document.querySelector('.search-btn');
+        searchButton.addEventListener('click', function() {
+            window.location.assign(`{{ url('/jobs') }}?q=${document.querySelector('#search').value}`)
+        });
+    </script>
 </body>
 </html>
