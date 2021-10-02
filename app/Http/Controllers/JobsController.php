@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
 
@@ -48,5 +49,47 @@ class JobsController extends Controller
                 'current_page' => $page,
             ]);
         }
+    }
+
+    public function post() {
+        return view('jobs.post');
+    }
+
+    public function create(Request $request) {
+        $form = $request->except(['_token']);
+
+        $company = Company::where('name', '=', $form['companyName'])->first();
+
+        if($company) {
+            Job::create([
+                'title' => $form['jobTitle'],
+                'description' => $form['jobDescription'],
+                'job_type' => $form['job_type'],
+                'company_id' => $company->id,
+            ]);
+
+            return redirect()->to('/jobs');
+        } else {
+            $newCompany = Company::create([
+                'name' => $form['companyName']
+            ]);
+
+            Job::create([
+                'title' => $form['jobTitle'],
+                'description' => $form['jobDescription'],
+                'job_type' => $form['job_type'],
+                'company_id' => $newCompany->id,
+            ]);
+            
+            return redirect()->to('/jobs');
+        }
+    }
+
+    public function show($id) {
+        $job = Job::findOrFail($id);
+
+        return view('jobs.show', [
+            'job' => $job
+        ]);
     }
 }

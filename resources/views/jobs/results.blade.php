@@ -7,8 +7,8 @@
 @section('content')
     <div class="mt-4 row">
         <div>
-            <div class="mt-2 d-flex flex-direction-column">
-                <input type="text" class="form-control" placeholder="Search Job" name="search" id="search" value="{{ $query }}">
+            <div class="mt-2 d-flex flex-direction-column justify-content-between">
+                <input type="text" class="form-control w-75" placeholder="Search Job" name="search" id="search" value="{{ $query }}">
                 <button class="btn btn-primary search-btn">Find jobs</button>
             </div>
 
@@ -77,9 +77,16 @@
 @section('scripts')
     <script>
         var jobs = document.querySelectorAll('.job').forEach(function (el) {
-            el.addEventListener('click', function() {
-                window.location.assign(`{{ url("/jobs?q=$query") }}&j=${el.getAttribute('data-id')}&p={{ $current_page }}`);
-            });
+            if(window.innerWidth > 975) {
+                el.addEventListener('click', function() {
+                    window.location.assign(`{{ url("/jobs?q=$query") }}&j=${el.getAttribute('data-id')}&p={{ $current_page }}`);
+                });
+            }
+            else {
+                el.addEventListener('click', function() {
+                    window.location.assign(`{{ url('/job') }}/${el.getAttribute('data-id')}`);
+                })
+            }
         });
     </script>
 @endsection

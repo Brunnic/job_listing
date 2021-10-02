@@ -26,7 +26,7 @@ class AddCompanyForeignKeyToJobs extends Migration
     public function down()
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->dropForeign('company_id');
+            $table->dropForeign(['company_id']);
         });
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompaniesContoller;
 use App\Http\Controllers\JobsController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [JobsController::class, 'index']);
 Route::get('/jobs', [JobsController::class, 'jobs']);
+Route::get('/jobs/new', [JobsController::class, 'post']);
+Route::post('/jobs/new', [JobsController::class, 'create']);
+Route::get('/job/{id}', [JobsController::class, 'show']);
+
+Route::get('/companies', [CompaniesContoller::class, 'index']);

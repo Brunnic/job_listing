@@ -10,8 +10,15 @@
           <a class="nav-link"  href="{{ url('/') }}">Jobs</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Companies</a>
+          <a class="nav-link" href="{{ url('/companies') }}">Companies</a>
         </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a href="{{ url('/jobs/new') }}" class="nav-link">Post a job</a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
